@@ -65,14 +65,35 @@ public class EmployeeServicesImplementation implements EmployeeServices {
 //                .bodyToMono(DepartmentDto.class)
 //                .block();
 
-        apiClient
+//        ---------------------------
+//        Synchronous call using Spring Cloud OpenFeign
+//        ---------------------------
+//        When to Use WebClient vs OpenFeign?
+//
+//        1. Use WebClient when you want to use Spring Reactive Stream API, or in short
+//        Reactive Programming. Reactive Programming is form of async programming which
+//        execution being triggered by the arrival of data to execute on. It's push based.
+//        The ordinary async call usually based on pull-based call, which doesn't react to
+//        data arriving, instead it gets ready to process data and after that request the data.
+//        2. Use WebClient when need non-blocking HTTP request, otherwise use Feign due to its simple usage.
+
+//        ---------------------------
+//        OpenFeign helps us to simplify client code to talk to the RESTful web services.
+//        ---------------------------
+
+        DepartmentDto departmentDto = apiClient.getDepartment(employee.getDepartmentCode());
+
+//        ---------------------------
+//        ModelMapper
+//        ---------------------------
+//        Mapping using modelMapper can be implemented directly in services, placing it on convertDto return null exception
+//        EmployeeDto savedEmployee = modelMapper.map(employee, EmployeeDto.);
+
         EmployeeDto employeeDto = convertDto.convertToDto(employee);
 
         APIResponseDto apiResponseDto = new APIResponseDto();
         apiResponseDto.setDepartmentDto(departmentDto);
         apiResponseDto.setEmployeeDto(employeeDto);
-//        Mapping using modelMapper can be implemented directly in services, placing it on convertDto return null exception
-//        EmployeeDto savedEmployee = modelMapper.map(employee, EmployeeDto.);
 
         return apiResponseDto;
     }
