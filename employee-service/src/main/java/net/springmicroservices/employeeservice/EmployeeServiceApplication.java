@@ -35,6 +35,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 		)
 )
 @EnableFeignClients
+@EnableEurekaClient
 public class EmployeeServiceApplication {
 
 	@Bean
