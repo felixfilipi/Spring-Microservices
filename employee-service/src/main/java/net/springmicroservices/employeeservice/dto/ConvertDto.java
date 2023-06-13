@@ -14,7 +14,8 @@ public class ConvertDto {
                 employee.getFirst_name(),
                 employee.getLast_name(),
                 employee.getEmail(),
-                employee.getDepartmentCode()
+                employee.getDepartmentCode(),
+                employee.getOrganizationCode()
         );
         return newDto;
     }
@@ -25,7 +26,8 @@ public class ConvertDto {
                 employeeDto.getFirst_name(),
                 employeeDto.getLast_name(),
                 employeeDto.getEmail(),
-                employeeDto.getDepartmentCode()
+                employeeDto.getDepartmentCode(),
+                employeeDto.getOrganizationCode()
         );
         return newEmployee;
     }

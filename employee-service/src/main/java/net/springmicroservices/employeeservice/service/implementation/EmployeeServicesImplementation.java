@@ -1,15 +1,16 @@
 package net.springmicroservices.employeeservice.service.implementation;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.AllArgsConstructor;
-import net.springmicroservices.employeeservice.dto.APIResponseDto;
-import net.springmicroservices.employeeservice.dto.ConvertDto;
-import net.springmicroservices.employeeservice.dto.DepartmentDto;
-import net.springmicroservices.employeeservice.dto.EmployeeDto;
+import net.springmicroservices.employeeservice.dto.*;
 import net.springmicroservices.employeeservice.entity.Employee;
 import net.springmicroservices.employeeservice.exception.ResourceNotFoundException;
 import net.springmicroservices.employeeservice.repository.EmployeeRepository;
 import net.springmicroservices.employeeservice.service.APIClient;
 import net.springmicroservices.employeeservice.service.EmployeeServices;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -29,6 +30,8 @@ public class EmployeeServicesImplementation implements EmployeeServices {
     private WebClient webClient;        // support sync, async, and streaming
     private APIClient apiClient;        // use openfeign interface
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServicesImplementation.class);
+
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
         Employee employee = convertDto.convertToEmployee(employeeDto);
@@ -38,7 +41,16 @@ public class EmployeeServicesImplementation implements EmployeeServices {
         return savedEmployeeDto;
     }
 
+    @Override
+
+//    change state in open, closed, and half open
+//    @CircuitBreaker(name="${spring.application.name}", fallbackMethod = "getDefaultDepartment")
+
+//    Retry the connection for set of time (set on 5 times) (exist in config file)
+//    After 5 retry of connection, and it return fail, it will go into fallback method and return default method
+    @Retry(name="${spring.application.name}", fallbackMethod = "getDefaultDepartment")
     public APIResponseDto getEmployeeById(Long employeeId){
+        LOGGER.info("inside getEmployeeById() method");
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(
                 () -> new ResourceNotFoundException("Employee", "id", employeeId)
         );
@@ -59,11 +71,11 @@ public class EmployeeServicesImplementation implements EmployeeServices {
 //        using WebClient
 //        ---------------------------
 
-//        DepartmentDto departmentDto = webClient.get()
-//                .uri("http://localhost:8080/api/departments/" + employee.getDepartmentCode())
-//                .retrieve()
-//                .bodyToMono(DepartmentDto.class)
-//                .block();
+        OrganizationDto organizationDto = webClient.get()
+                .uri("http://localhost:8083/api/organiztions/" , employee.getOrganizationCode())
+                .retrieve()
+                .bodyToMono(OrganizationDto.class)
+                .block();
 
 //        ---------------------------
 //        Synchronous call using Spring Cloud OpenFeign
@@ -94,6 +106,7 @@ public class EmployeeServicesImplementation implements EmployeeServices {
         APIResponseDto apiResponseDto = new APIResponseDto();
         apiResponseDto.setDepartmentDto(departmentDto);
         apiResponseDto.setEmployeeDto(employeeDto);
+        apiResponseDto.setOrganizationDto(organizationDto);
 
         return apiResponseDto;
     }
@@ -125,5 +138,24 @@ public class EmployeeServicesImplementation implements EmployeeServices {
         );
 
         employeeRepository.deleteById(employeeId);
+    }
+    public APIResponseDto getDefaultDepartment(Long employeeId){
+        LOGGER.info("inside getDefaultDepartment() method");
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(
+                () -> new ResourceNotFoundException("Employee", "id", employeeId)
+        );
+
+        DepartmentDto departmentDto = new DepartmentDto();
+        departmentDto.setDepartmentCode("RD001");
+        departmentDto.setDepartmentName("R&D Department");
+        departmentDto.setDepartmentDescription("Research & Development Department");
+
+        EmployeeDto employeeDto = convertDto.convertToDto(employee);
+
+        APIResponseDto apiResponseDto = new APIResponseDto();
+        apiResponseDto.setDepartmentDto(departmentDto);
+        apiResponseDto.setEmployeeDto(employeeDto);
+
+        return apiResponseDto;
     }
 }
