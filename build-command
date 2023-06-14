@@ -1,0 +1,70 @@
+#------------------------------------------
+# DOCKER BUILD
+#------------------------------------------
+
+#in current dockerfile folder
+docker build -t [our-docker-image-name]:[our-tag] .
+
+#example
+docker build -t service-registry-docker:0.1.RELEASE .
+
+#------------------------------------------
+# DOCKER RUN
+#------------------------------------------
+
+# in current dockerfile folder
+docker run -p [host-port]:[docker-container-port] [docker-image-name]
+
+# To access the application service, we need to use the host-port
+# Run docker in detached mode / background mode
+
+docker run -p [host-port]:[docker-container-port] -d [docker-image-name]
+
+# Example
+docker run -p 8761:8761 -d service-registry-docker
+
+# To see docker logs | we can provide only 4 first char to the [docker-id]
+docker logs -f [docker-id]
+
+#------------------------------------------
+# DOCKER PUSH TO DOCKER HUB
+#------------------------------------------
+
+# Login to docker
+docker login
+
+# Create new repository to change name and tag
+docker tag [docker-images-name] [dockerID]/[repository-names]:[tag]
+
+# Example
+docker tag service-registry-docker felixfilipi/service-registry-docker:0.1.RELEASE
+
+# push to repository
+docker push [dockerID]/[repository-names]:[tag]
+
+# Example
+docker push felixfilipi/service-registry-docker:0.1.RELEASE
+
+#------------------------------------------
+# DOCKER PULL FROM DOCKER HUB
+#------------------------------------------
+
+docker pull [dockerID]/[repository-name]:[tag]
+
+#Example
+docker pull felixfilipi/service-registry-docker:0.1.RELEASE
+docker pull postgres
+
+# Run docker Postgres
+docker run -p [host-port]:[container-port] --name [create-docker-name] -e POSTGRES_PASSWORD=[YOUR-PASSWORD] -e POSTGRES_USER=[YOUR-USERNAME] -e POSTGRES_DATABASE=[YOUR_DATABASE] -d [db-image-name]:[tag]
+
+# Example
+docker run -p 5431:5432 --name my-docker-postgres -e POSTGRES_DATABASE=employee-db -e POSTGRES_USER=felixfilipi -e POSTGRES_PASSWORD=1234 -d postgres:latest
+
+# Go into docker images bash
+docker exec -it [images-name] bash
+
+# Example
+docker exec -it my-docker-postgres bash
+
+

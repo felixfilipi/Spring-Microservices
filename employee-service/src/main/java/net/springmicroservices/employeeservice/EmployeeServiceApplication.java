@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.info.License;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+//import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
@@ -36,7 +36,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 		)
 )
 @EnableFeignClients
-@EnableEurekaClient
+//@EnableEurekaClient
 // USE SPRING CLOUD V2021 AND USE ENABLE EUREKA CLIENT ANNOTATION, FOR SERVICES, IDK WHY
 // BUT THE AUTO ENABLED EUREKA CLIENT ANNOTATION V2022 NOT WORKING HERE, BUT WE CAN USE
 // V2022 FOR CONFIG SERVER AND API GATEWAY

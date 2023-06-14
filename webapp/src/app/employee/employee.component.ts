@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Department } from './classes/department';
-import { Employee } from './classes/employee';
+import { Department } from './classes/Department';
+import { Employee } from './classes/Employee';
 import { Organization } from './classes/Organization';
 import { EmployeeService } from './services/employee.service';
 
