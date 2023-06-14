@@ -5,7 +5,7 @@ import { Organization } from './classes/Organization';
 import { EmployeeService } from './services/employee.service';
 
 @Component({
-  selector: 'app-employee',
+  selector: 'employee',
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.scss'],
 })
