@@ -56,7 +56,7 @@ docker pull felixfilipi/service-registry-docker:0.1.RELEASE
 docker pull postgres
 
 # Run docker Postgres
-docker run -p [host-port]:[container-port] --name [create-docker-name] -e POSTGRES_PASSWORD=[YOUR-PASSWORD] -e POSTGRES_USER=[YOUR-USERNAME] -e POSTGRES_DATABASE=[YOUR_DATABASE] -d [db-image-name]:[tag]
+docker run -p [host-port]:[container-port] --name [create-docker-name] -e POSTGRES_PASSWORD=[YOUR-PASSWORD] -e POSTGRES_USER=[YOUR-USERNAME] -e POSTGRES_DATABASE=[YOUR_DATABASE] -d [db-image-name]:[tag] --network [YOUR-NETWORK]
 
 # Example
 docker run -p 5431:5432 --name my-docker-postgres -e POSTGRES_DATABASE=employee-db -e POSTGRES_USER=felixfilipi -e POSTGRES_PASSWORD=1234 -d postgres:latest
@@ -67,4 +67,21 @@ docker exec -it [images-name] bash
 # Example
 docker exec -it my-docker-postgres bash
 
+# Get into postgres
+psql -U postgres
 
+#------------------------------------------
+# DOCKER CREATE AND MAP NETWORK
+#------------------------------------------
+
+# CREATE NETWORK
+docker network create [network-name]
+
+# EXAMPLE
+docker network create springboot-microservice-net
+
+# Check network list
+docker network ls
+
+# RUN DOCKER IN THE SAME NETWORK
+docker run --network [NETWORK-NAME] --name [YOUR-CONTAINER-NAME] -p [HOST-POST]:[CONTAINER-PORT] [OUR-DOCKER-IMAGES]
