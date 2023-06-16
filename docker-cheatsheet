@@ -85,3 +85,11 @@ docker network ls
 
 # RUN DOCKER IN THE SAME NETWORK
 docker run --network [NETWORK-NAME] --name [YOUR-CONTAINER-NAME] -p [HOST-POST]:[CONTAINER-PORT] [OUR-DOCKER-IMAGES]
+
+
+#------------------------------------------
+# DOCKER COMPOSE
+#------------------------------------------
+
+# Run docker compose
+docker compose up -d --build
