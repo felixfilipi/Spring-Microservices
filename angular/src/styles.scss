@@ -19,3 +19,7 @@ body{
 .spacing{
     margin-top:10px;
 }
+
+.danger{
+    @extend .alert, .alert-danger;
+}

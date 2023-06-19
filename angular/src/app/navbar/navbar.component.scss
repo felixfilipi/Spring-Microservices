@@ -1,3 +1,9 @@
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+
 .navbar-collapse{
     display: block;
+}
+
+.navbar-bs{
+    @extend .navbar, .navbar-expand-lg, .navbar-dark, .bg-dark, .container-fluid;
 }
