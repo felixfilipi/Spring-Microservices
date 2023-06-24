@@ -15,6 +15,11 @@ export class EmployeeService {
    }
 
    getEmployee(){
-     return axios.get(this.EMPLOYEE_SERVICE_BASE_URL + "/" + this.EMPLOYEE_ID);
+     return axios.get(this.EMPLOYEE_SERVICE_BASE_URL,
+                      {auth:
+                        {
+                        username:'user',
+                        password:'f705a7b7-d696-4082-b01f-b17bfb4cd5ce'
+                      }});
    }
 }

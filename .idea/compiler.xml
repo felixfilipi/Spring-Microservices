@@ -2,16 +2,24 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <option name="USE_RELEASE_OPTION" value="false" />
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/kafka-rp/kafka-producer-wikimedia/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/kafka-rp/kafka-consumer-database/src/main/resources/archetype-resources" includeSubdirectories="true" />
+    </excludeFromCompile>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="api-gateway" />
         <module name="config-server" />
-        <module name="organization-service" />
+        <module name="kafka-consumer-database" />
         <module name="department-service" />
+        <module name="spring-rabbitmq" />
+        <module name="spring-kafka" />
+        <module name="api-gateway" />
+        <module name="organization-service" />
+        <module name="kafka-producer-wikimedia" />
         <module name="service-registry" />
         <module name="employee-service" />
       </profile>
@@ -24,8 +32,13 @@
       <module name="config-server" options="-parameters" />
       <module name="department-service" options="-parameters" />
       <module name="employee-service" options="-parameters" />
+      <module name="kafka-consumer-database" options="-parameters" />
+      <module name="kafka-producer-wikimedia" options="-parameters" />
+      <module name="kafka-rp" options="" />
       <module name="organization-service" options="-parameters" />
       <module name="service-registry" options="-parameters" />
+      <module name="spring-kafka" options="-parameters" />
+      <module name="spring-rabbitmq" options="-parameters" />
     </option>
   </component>
 </project>

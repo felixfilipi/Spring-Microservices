@@ -10,6 +10,10 @@
         <option value="$PROJECT_DIR$/api-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/config-server/pom.xml" />
         <option value="$PROJECT_DIR$/organization-service/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-kafka/pom.xml" />
+        <option value="$PROJECT_DIR$/kafka-wikimedia/pom.xml" />
+        <option value="$PROJECT_DIR$/kafka-rp/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-rabbitmq/pom.xml" />
       </list>
     </option>
   </component>
